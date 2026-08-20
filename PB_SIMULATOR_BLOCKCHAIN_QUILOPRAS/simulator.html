@@ -1,0 +1,64 @@
+<!-- Encoding -->
+<meta charset="UTF-8">
+
+<!-- Viewport -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Title -->
+<title>First Blockchain</title>
+
+<!-- CSS -->
+<link rel="stylesheet" href="css/sim.css">
+
+<!-- Container -->
+<div class="container">
+
+    <!-- Heading -->
+    <h1>First Blockchain</h1>
+
+    <!-- Description -->
+    <p class="subtitle">
+        Add Block, Inspect Hashes, and see how tampering works in PB.
+    </p>
+
+    <!-- Controls -->
+    <section class="controls">
+
+        <!-- Input -->
+        <input
+            id="blockData"
+            type="text"
+            placeholder="Enter a Block Data"
+        >
+
+        <!-- Add -->
+        <button id="addBlockBtn">Add Block</button>
+
+        <!-- Validate -->
+        <button id="validateBtn">Validate Chain</button>
+
+    </section>
+
+    <!-- Chain -->
+    <div id="chain" class="chain"></div>
+
+    <!-- Output -->
+    <section class="output">
+
+        <!-- Status -->
+        <h2>Chain Status</h2>
+
+        <!-- Result -->
+        <div id="status" class="status valid">
+            Chain is Valid
+        </div>
+
+    </section>
+
+</div>
+
+<!-- CryptoJS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+
+<!-- JavaScript -->
+<script src="js/sim.js"></script>
