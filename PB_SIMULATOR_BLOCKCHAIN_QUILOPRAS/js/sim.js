@@ -1,6 +1,5 @@
 // Block
 class Block {
-    // Setup
     constructor(index, timestamp, data, previousHash = '') {
         this.index = index;
         this.timestamp = timestamp;
@@ -10,7 +9,6 @@ class Block {
         this.hash = this.calculateHash();
     }
 
-    // Hash
     calculateHash() {
         return CryptoJS.SHA256(
             this.index +
@@ -24,12 +22,10 @@ class Block {
 
 // Blockchain
 class Blockchain {
-    // Setup
     constructor() {
         this.chain = [this.createGenesisBlock()];
     }
 
-    // Genesis
     createGenesisBlock() {
         return new Block(
             0,
@@ -39,12 +35,10 @@ class Blockchain {
         );
     }
 
-    // Latest
     getLatestBlock() {
         return this.chain[this.chain.length - 1];
     }
 
-    // Add
     addBlock(data) {
         const newBlock = new Block(
             this.chain.length,
@@ -56,62 +50,47 @@ class Blockchain {
         this.chain.push(newBlock);
     }
 
-    // Validate
     isChainValid() {
-        // Check
         for (let i = 0; i < this.chain.length; i++) {
-
             const currentBlock = this.chain[i];
 
-            // Hash
             if (currentBlock.hash !== currentBlock.calculateHash()) {
                 return false;
             }
 
-            // Previous
             if (i > 0) {
                 const previousBlock = this.chain[i - 1];
-
                 if (currentBlock.previousHash !== previousBlock.hash) {
                     return false;
                 }
             }
         }
-
         return true;
     }
 }
 
-// Blockchain
+// Instantiate
 const blockchain = new Blockchain();
 
-// Elements
+// DOM Elements
 const chainEl = document.getElementById('chain');
 const statusEl = document.getElementById('status');
 const addBlockBtn = document.getElementById('addBlockBtn');
 const validateBtn = document.getElementById('validateBtn');
 const blockDataInput = document.getElementById('blockData');
 
-// Display
+// Display function
 function renderChain() {
     chainEl.innerHTML = '';
 
-    // Blocks
     blockchain.chain.forEach((block, index) => {
-
-        // Check
         const blockIsValid =
-        block.hash === block.calculateHash() &&
-        (
-            index === 0 ||
-            block.previousHash === blockchain.chain[index - 1].hash
-        );
+            block.hash === block.calculateHash() &&
+            (index === 0 || block.previousHash === blockchain.chain[index - 1].hash);
 
-        // Create
         const blockDiv = document.createElement('div');
         blockDiv.className = `block ${blockIsValid ? 'valid' : 'invalid'}`;
 
-        // Content
         blockDiv.innerHTML = `
             <div class="block-header">
                 <h3>Block #${block.index}</h3>
@@ -128,13 +107,10 @@ function renderChain() {
             <div class="field">
                 <span class="label">Data</span>
                 <div
-                    class="value"
+                    class="value editable-data"
                     contenteditable="true"
                     data-index="${index}"
-                    data-field="data"
-                >
-                    ${block.data}
-                </div>
+                >${block.data}</div>
             </div>
 
             <div class="field">
@@ -150,87 +126,61 @@ function renderChain() {
 
         chainEl.appendChild(blockDiv);
     });
-
-    // Edit
-    document
-        .querySelectorAll('[contenteditable="true"]')
-        .forEach(el => {
-
-            // Update
-            el.addEventListener('input', e => {
-                const idx = Number(e.target.dataset.index);
-
-                blockchain.chain[idx].data =
-                    e.target.innerText.trim();
-
-                blockchain.chain[idx].hash =
-                    blockchain.chain[idx].calculateHash();
-
-                // Update
-                for (
-                    let i = idx + 1;
-                    i < blockchain.chain.length;
-                    i++
-                ) {
-                    blockchain.chain[i].previousHash =
-                        blockchain.chain[i - 1].hash;
-
-                    blockchain.chain[i].hash =
-                        blockchain.chain[i].calculateHash();
-                }
-
-                // Status
-                updateStatus();
-
-                // Display
-                renderChain();
-            });
-        });
 }
 
-// Status
+// Event Delegation for Content Editing (Updates on blur/focusout instead of every keystroke)
+chainEl.addEventListener('blur', (e) => {
+    if (e.target.classList.contains('editable-data')) {
+        const idx = Number(e.target.dataset.index);
+        const newText = e.target.innerText.trim();
+
+        if (blockchain.chain[idx].data === newText) return;
+
+        blockchain.chain[idx].data = newText;
+        blockchain.chain[idx].hash = blockchain.chain[idx].calculateHash();
+
+        // Recalculate subsequent block hashes
+        for (let i = idx + 1; i < blockchain.chain.length; i++) {
+            blockchain.chain[i].previousHash = blockchain.chain[i - 1].hash;
+            blockchain.chain[i].hash = blockchain.chain[i].calculateHash();
+        }
+
+        updateStatus();
+        renderChain();
+    }
+}, true);
+
+// Update Status text
 function updateStatus() {
     const valid = blockchain.isChainValid();
-
-    statusEl.textContent = valid
-        ? 'Chain is valid'
-        : 'Chain is invalid';
-
-    statusEl.className = `status ${
-        valid ? 'valid' : 'invalid'
-    }`;
+    statusEl.textContent = valid ? 'Chain is valid' : 'Chain is invalid';
+    statusEl.className = `status ${valid ? 'valid' : 'invalid'}`;
 }
 
-// Add
+// Add Block handler
 addBlockBtn.addEventListener('click', () => {
     const data = blockDataInput.value.trim();
-
-    // Check
     if (!data) return;
 
-    // Add
     blockchain.addBlock(data);
-
-    // Clear
     blockDataInput.value = '';
 
-    // Update
     renderChain();
     updateStatus();
 });
 
-// Validate
+// Validate button handler
 validateBtn.addEventListener('click', () => {
     updateStatus();
 });
 
-// Enter
+// Enter key shortcut
 blockDataInput.addEventListener('keydown', (e) => {
     if (e.key === 'Enter') {
         addBlockBtn.click();
     }
 });
 
-// Start
+// Initial Render
 renderChain();
 updateStatus();
