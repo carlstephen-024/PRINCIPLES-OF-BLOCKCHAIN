@@ -1,0 +1,331 @@
+/* PostIt Board - Stylesheet
+   Theme: burgundy and black, for a formal, elegant feel.
+   Built with flexbox for every layout section.
+   Kept to simple properties: flex, spacing, borders, shadows,
+   and basic hover transitions.
+   Fonts: "Playfair Display" (serif) for display text, "Lato" for UI text.*/
+
+/* Reset */
+* {
+  box-sizing: border-box;
+}
+
+/*Page background*/
+body {
+  margin: 0;
+  padding: 50px 16px 80px;
+  font-family: "Lato", sans-serif;
+  color: #ede4e4;
+  background-color: #0d0708; /* near-black with a warm tint */
+
+  /* Flexbox centers the board on the page */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Board: flex column holding every section */
+.board {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 620px;
+}
+
+/*Header*/
+.board-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 38px;
+}
+
+.board-header h1 {
+  font-family: "Playfair Display", serif;
+  font-size: 3.2rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  margin: 0;
+  color: #f2e8e8;
+}
+
+/* Thin burgundy rule under the title */
+.board-subtitle {
+  font-family: "Playfair Display", serif;
+  font-style: italic;
+  font-size: 1rem;
+  color: #b08a8f;
+  margin: 10px 0 0;
+  padding-top: 10px;
+  border-top: 1px solid #6b1f2a;
+}
+
+/*Card: shared style for form, composer, and posts*/
+.card {
+  width: 100%;
+  background-color: #17090c;
+  border: 1px solid #3d1119;
+  border-left: 4px solid #7b1e2b; /* burgundy accent edge */
+  border-radius: 4px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.55);
+  padding: 28px;
+  margin-bottom: 28px;
+
+  display: flex;
+  flex-direction: column;
+}
+
+/*Step 1: user info form*/
+.form-card {
+  max-width: 430px;
+  align-self: center;
+}
+
+.form-card h2 {
+  font-family: "Playfair Display", serif;
+  font-size: 1.9rem;
+  font-weight: 500;
+  margin: 0;
+  color: #f2e8e8;
+}
+
+.card-note {
+  font-size: 0.85rem;
+  color: #a58389;
+  margin: 6px 0 18px;
+}
+
+/* Form is a flex column so fields stack evenly */
+#userInfoForm {
+  display: flex;
+  flex-direction: column;
+}
+
+#userInfoForm label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin: 12px 0 5px;
+  color: #a58389;
+}
+
+#userInfoForm input,
+#userInfoForm select {
+  width: 100%;
+  padding: 10px;
+  font-family: "Lato", sans-serif;
+  font-size: 0.9rem;
+  border: 1px solid #3d1119;
+  border-radius: 3px;
+  background-color: #0d0708;
+  color: #ede4e4;
+}
+
+#userInfoForm input:focus,
+#userInfoForm select:focus,
+#captionInput:focus {
+  outline: none;
+  border-color: #9b2c3c;
+}
+
+/* Buttons*/
+.btn {
+  font-family: "Lato", sans-serif;
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+  border-radius: 3px;
+  transition: background-color 0.2s ease;
+}
+
+.btn-primary {
+  margin-top: 22px;
+  padding: 11px 14px;
+  font-size: 0.8rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  background-color: #7b1e2b;
+  color: #f7efef;
+}
+
+.btn-primary:hover {
+  background-color: #9b2c3c;
+}
+
+.btn-link {
+  background: none;
+  padding: 0;
+  font-size: 0.8rem;
+  color: #b08a8f;
+  text-decoration: underline;
+}
+
+.btn-link:hover {
+  color: #d9b3b7;
+}
+
+/*Step 2: post section*/
+.hidden {
+  display: none;
+}
+
+/* Flex row: greeting left, reset link right */
+.user-bar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  font-size: 0.9rem;
+  color: #b08a8f;
+  margin-bottom: 20px;
+  padding: 0 4px;
+}
+
+/*Composer*/
+.composer-card {
+  max-width: 480px;
+  align-self: center;
+}
+
+.composer-card label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #a58389;
+  margin-bottom: 8px;
+}
+
+#captionInput {
+  width: 100%;
+  resize: vertical;
+  min-height: 78px;
+  padding: 12px;
+  font-family: "Playfair Display", serif;
+  font-size: 1.1rem;
+  line-height: 1.5;
+  border: 1px solid #3d1119;
+  border-radius: 3px;
+  background-color: #0d0708;
+  color: #ede4e4;
+}
+
+/* Flex row: counter left, Post button right */
+.composer-footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 12px;
+}
+
+#charCount {
+  font-size: 0.75rem;
+  color: #a58389;
+}
+
+.composer-footer .btn-primary {
+  margin-top: 0;
+  padding: 9px 26px;
+}
+
+/*Thread*/
+.thread {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Individual post card */
+.post-card {
+  max-width: 480px;
+  transition: border-left-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.post-card:hover {
+  border-left-color: #c0392b;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.7);
+}
+
+.post-label {
+  align-self: flex-start;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  padding: 4px 12px;
+  border: 1px solid #7b1e2b;
+  border-radius: 2px;
+  background-color: #17090c;
+  color: #c98d95;
+  margin-bottom: 14px;
+}
+
+.post-caption {
+  font-family: "Playfair Display", serif;
+  font-size: 1.25rem;
+  line-height: 1.55;
+  margin: 0 0 14px;
+  word-wrap: break-word;
+  color: #f2e8e8;
+}
+
+.post-meta {
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  color: #a58389;
+  margin: 0 0 14px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid #3d1119;
+}
+
+/* Encrypted value block nested inside each post card */
+.encrypted-block {
+  display: flex;
+  flex-direction: column;
+  background-color: #0d0708;
+  border-radius: 3px;
+  padding: 12px;
+}
+
+.encrypted-label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+  color: #9b2c3c;
+}
+
+.encrypted-value {
+  font-family: "Courier New", monospace;
+  font-size: 0.7rem;
+  line-height: 1.5;
+  word-break: break-all;
+  color: #a58389;
+}
+
+/* Empty state */
+.empty-state {
+  font-family: "Playfair Display", serif;
+  font-style: italic;
+  text-align: center;
+  color: #a58389;
+  font-size: 0.95rem;
+  margin-top: 12px;
+}
+
+/* ---- Responsive tweaks ---- */
+@media (max-width: 480px) {
+  .board-header h1 {
+    font-size: 2.4rem;
+  }
+
+  .card {
+    padding: 20px;
+  }
+}

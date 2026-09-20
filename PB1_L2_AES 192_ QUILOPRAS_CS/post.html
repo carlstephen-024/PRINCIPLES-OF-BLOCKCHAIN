@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Notebook</title>
+
+  <!-- Google Fonts: "Playfair Display" (elegant serif for more elegant vibess) for headings and post text, and
+       "Lato" for labels, buttons, and smaller interface text -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
+
+  <!-- CryptoJS 4.2.0 (via Cloudflare's cdnjs CDN) - this will encrypt each post by AES -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.2.0/crypto-js.min.js"></script>
+
+  <!--Sylesheet -->
+  <link rel="stylesheet" href="post.css" />
+</head>
+<body>
+
+  <!-- Board wrapper: to keep the flex column centerd   holding every section -->
+  <div class="board">
+
+    <header class="board-header">
+      <h1>The Notebook</h1>
+      <p class="board-subtitle">A quiet place for your thoughts, silent battles, and worried mind.</p>
+    </header>
+
+    <!-- STEP 1: only 1 user at a time, this means no SIGNUP, just ask the USER his/her name ONE TIME -->
+    <!-- localStorage and can be reused on every later visit.  -->
+    <section id="userFormSection" class="card form-card">
+      <h2>Before anything else</h2>
+      <p class="card-note">Tell us who you are. Donn't worry, we'll only ask this once.</p>
+
+      <form id="userInfoForm">
+        <!-- Full Name -->
+        <label for="fullName">Full Name</label>
+        <input type="text" id="fullName" name="fullName" placeholder="Jose Rizal" required />
+
+        <!-- Date of Birth -->
+        <label for="dob">Date of Birth</label>
+        <input type="date" id="dob" name="dob" required />
+
+        <!-- Year Level -->
+        <label for="yearLevel">Year Level</label>
+        <select id="yearLevel" name="yearLevel" required>
+          <option value="" disabled selected>Select your current year level</option>
+          <option value="1st Year">1st Year</option>
+          <option value="2nd Year">2nd Year</option>
+          <option value="3rd Year">3rd Year</option>
+          <option value="4th Year">4th Year</option>
+        </select>
+
+        <!-- Gender -->
+        <label for="gender">Gender</label>
+        <select id="gender" name="gender" required>
+          <option value="" disabled selected>Select gender</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+          <option value="Prefer not to say">Gay</option>
+          <option value="Prefer not to say">Lesbian</option>
+          <option value="Prefer not to say">I prefer not to say</option>
+        </select>
+
+        <!-- Username -->
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" placeholder="jrizz" required />
+
+        <!-- Password -->
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" placeholder="••••••••" required />
+
+        <button type="submit" class="btn btn-primary">Enter</button>
+      </form>
+    </section>
+
+    <!-- STEP 2: Posting UI (hidden until form will be submitted)  -->
+    <section id="postSection" class="hidden">
+
+      <!-- Greeting on the left, reset option on the right -->
+      <div class="user-bar">
+        <span id="welcomeText"></span>
+        <button id="resetUserBtn" class="btn btn-link" title="Forget saved information and let's start all over again">Not you?</button>
+      </div>
+
+      <!-- Post composer -->
+      <div class="card composer-card">
+        <label for="captionInput"> Write your thoughts:> </label>
+        <textarea id="captionInput" placeholder="What's on your mind?" maxlength="280" rows="3"></textarea>
+        <div class="composer-footer">
+          <span id="charCount">0 / 280</span>
+          <button id="postBtn" class="btn btn-primary">Post</button>
+        </div>
+      </div>
+
+      <!-- Thread of posts, newest first -->
+      <div id="thread" class="thread">
+        <!-- Post cards by post.js -->
+      </div>
+
+      <!-- Shown when there are no posts yet -->
+      <p id="emptyState" class="empty-state">Seems like nothing has been posted yet. Write the first note above! ENJOY</p>
+      <p id="emptyState" class="empty-state">This is your safe space, rant all you want, no one will judge. <br>
+                                             I hope you heal from all the pain you're going through or you've been through. </p>
+    </section>
+
+  </div>
+
+  <!-- Local script -->
+  <script src="post.js"></script>
+</body>
+</html>
